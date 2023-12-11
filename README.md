@@ -24,13 +24,24 @@ The methodology includes the following key steps:
 - Analyzed key financial ratios by dividing them into buckets of liquidity, profitability, debt coverage, and asset management.
 - Performed univariate and multivariate analysis using Variance Inflation Factor (ViF) and Correlation analysis to avoid multicollinearity in the independent variables.
 - Developed a logit model and XGB model by training through a walk-forward analysis.
+- Performed transcendental transformations on the independent feature set to get the results of a logit model close to the more powerful XGB model for better explainability
 - Benchmarked the results based on the Altman Z-Score.
 
 ## Results
 
 The results are as follows:
 
-- ![AUC Scores](AUC_Scores.png)
-- AUC Score table for Logit, XGB, and Z-Score.
+ ![AUC Scores](AUC_Scores.png)
+
+ The tabulated results are presented below:
+
+| Model   | AUC Score |
+|---------|-----------|
+| Logit   | 0.827     |
+| XGBoost | 0.857     |
+| Z-Score | 0.748     |
+
+
+
 - Performed calibration to match real-world probabilities.
 - Focused on the explainability of the model using stats models for Logit and weight, gain, and cover importance for XGB model.
