@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Turquoise - Predicting Optimal Cutoffs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+
+        #response {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #eee;
+            border: 1px dashed #bbb;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*UC0sy0bENl-DLPy3jmXNag.jpeg" alt="Team Turquoise Logo" style="display: block; margin: 0 auto;">
+
+<h2>Upload CSV File</h2>
+
+<!-- File Upload and Cutoff Calculation Form -->
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv" required><br>
+
+    <label for="costFP">Cost of False Positives:</label>
+    <input type="number" id="costFP" name="cost_fp" step="any" required><br>
+
+    <label for="costFN">Cost of False Negatives:</label>
+    <input type="number" id="costFN" name="cost_fn" step="any" required><br>
+
+    <label for="benefitTP">Benefit of True Positives:</label>
+    <input type="number" id="benefitTP" name="cost_tp" step="any" required><br>
+
+    <label for="benefitTN">Benefit of True Negatives:</label>
+    <input type="number" id="benefitTN" name="cost_tn" step="any" required><br>
+
+    <input type="number" name="cost" placeholder="Target Cost" required><br>
+    <input type="submit" value="Upload">
+</form>
+
+<!-- Div to display the response -->
+<div id="response"></div>
+<script>
+    document.getElementById('uploadForm').onsubmit = function(event) {
+        event.preventDefault();
+
+        // Function to format values as percentages
+        function formatPercentage(value) {
+            return (value * 100).toFixed(2) + '%';
+        }
+
+        // Form Data
+        var formData = new FormData(this);
+
+        // First AJAX Request to '/predict'
+        fetch('/predict', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check if the response contains a file URL
+            if (data.file_url) {
+                // Add a button to the response div that links to the file URL
+                document.getElementById('response').innerHTML = `<a href="${data.file_url}" target="_blank"><button>Download Predictions</button></a>`;
+            } else {
+                document.getElementById('response').innerHTML = JSON.stringify(data, null, 2);
+            }
+            // After receiving a response from '/predict', make a second request to '/cut_off'
+            return fetch('/cut_off', {
+                method: 'POST',
+                body: formData
+            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display FPR and TPR in a readable format
+            document.getElementById('response').innerHTML += `<br><h3>Cutoff Calculations:</h3><p>False Positive Rate (FPR): ${formatPercentage(data.fpr)}</p><p>True Positive Rate (TPR): ${formatPercentage(data.tpr)}</p>`;
+        })
+        .catch(error => {
+            document.getElementById('response').innerHTML += '<br>Error: ' + error;
+        });
+    };
+</script>
+
+
+
+</body>
+</html>
