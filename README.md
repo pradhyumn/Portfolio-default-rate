@@ -30,7 +30,7 @@ The methodology includes the following key steps:
 
 The results are as follows:
 
-- ![AUC Scores](AUC_Score.png)
+- ![AUC Scores](AUC_Scores.png)
 - AUC Score table for Logit, XGB, and Z-Score.
 - Performed calibration to match real-world probabilities.
 - Focused on the explainability of the model using stats models for Logit and weight, gain, and cover importance for XGB model.
