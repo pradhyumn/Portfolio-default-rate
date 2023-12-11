@@ -1,39 +1,41 @@
-# Portfolio-default-rate
+# Portfolio Default Rate Analysis
 
-Mining actual bank data from Italy to calculate the portfolio default rate. The model intends to provide better predictions of the one-year probability of default (PD) for prospective borrowers.
+This project delves into the intricacies of bank data from Italy to ascertain the portfolio default rate, offering enhanced predictions for the one-year probability of default (PD) among prospective borrowers.
 
-## Running
+## How to Run
 
-To run the model as a local application, git clone this repository, and run the `app.py` file. To run the model in a Python environment to predict the probability of default, you can run the `harness.py` file.
+### Local Application
+Clone this repository and execute `app.py` to run the model as a local application.
 
-## Code
+### Python Environment
+For predictions regarding the probability of default, run `harness.py` in your Python environment.
 
-The Jupyter notebook `val.ipynb` contains all the steps for cleaning, Exploratory Data Analysis (EDA), and training of the model. The XGB model checkpoint is also uploaded as `turquoise_model.bin`.
+## Code Overview
 
-## PitchDeck
+The `val.ipynb` Jupyter notebook comprehensively covers data cleansing, Exploratory Data Analysis (EDA), and the model training process. Additionally, the XGBoost model checkpoint is provided as `turquoise_model.bin`.
 
-This project was part of the Applied ML in Finance class for CDS NYU and NYU Stern, and the presentation file explaining all the steps in the project is in `Turquoise_PitchDeck.pdf`.
+## Pitch Deck
 
-## Methodology
+As a segment of the Applied ML in Finance course at CDS NYU and NYU Stern, this project is encapsulated in `Turquoise_PitchDeck.pdf`, which details every phase of the project.
 
-The methodology includes the following key steps:
+## Methodological Approach
 
-- Cleaned and imputed data using different financial ratios. More details are provided in the write-up.
-- Defined the firm year from July to June to avoid future-peeking issues.
-- Performed sanity checks to account for erroneous data due to accounting factors, etc.
-- Analyzed key financial ratios by dividing them into buckets of liquidity, profitability, debt coverage, and asset management.
-- Performed univariate and multivariate analysis using Variance Inflation Factor (ViF) and Correlation analysis to avoid multicollinearity in the independent variables.
-- Developed a logit model and XGB model by training through a walk-forward analysis.
-- Performed transcendental transformations on the independent feature set to get the results of a logit model close to the more powerful XGB model for better explainability
-- Benchmarked the results based on the Altman Z-Score.
+Our methodology encompasses a series of critical steps:
+
+- Employing various financial ratios for data cleansing and imputation, elaborated in the accompanying write-up.
+- Setting the fiscal year from July to June to preemptively address any future-peeking concerns.
+- Conducting thorough sanity checks to rectify any data anomalies arising from accounting discrepancies.
+- Segmenting key financial ratios into categories: liquidity, profitability, debt coverage, and asset management for in-depth analysis.
+- Utilizing Variance Inflation Factor (ViF) and Correlation analysis for both univariate and multivariate examinations to mitigate multicollinearity among independent variables.
+- Crafting both a logit model and an XGB model, refined through walk-forward analysis.
+- Implementing transcendental transformations on the independent feature set to align the logit model more closely with the robust XGB model, enhancing explainability.
+- Benchmarking the outcomes against the Altman Z-Score for a comprehensive evaluation.
 
 ## Results
 
-The results are as follows:
+Our findings are encapsulated in the visual below and the subsequent table:
 
- ![AUC Scores](AUC_Scores.png)
-
- The tabulated results are presented below:
+![AUC Scores](AUC_Scores.png)
 
 | Model   | AUC Score |
 |---------|-----------|
@@ -41,7 +43,7 @@ The results are as follows:
 | XGBoost | 0.857     |
 | Z-Score | 0.748     |
 
+Additional insights include:
 
-
-- Performed calibration to match real-world probabilities.
-- Focused on the explainability of the model using stats models for Logit and weight, gain, and cover importance for XGB model.
+- Calibration adjustments to align with real-world probability metrics.
+- Emphasis on model explainability, leveraging statistical models for Logit and assessing weight, gain, and cover importance in the XGB model.
