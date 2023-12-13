@@ -47,3 +47,4 @@ Additional insights include:
 
 - Calibration adjustments to align with real-world probability metrics.
 - Emphasis on model explainability, leveraging statistical models for Logit and assessing weight, gain, and cover importance in the XGB model.
+- Counterfactual analysis to understand the "what-if" scenarios and perform sensitivity analysis on the independent features.
